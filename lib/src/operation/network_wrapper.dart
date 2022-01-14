@@ -1,8 +1,8 @@
 part of '../network_manager.dart';
 
 extension _CoreServiceWrapperExtension on NetworkManager {
-  void _addNetworkIntercaptors(dio.Interceptor? interceptor) {
-    if (interceptor != null) interceptors.add(interceptor);
+  void _addNetworkIntercaptors(List<dio.Interceptor>? interceptor) {
+    if (interceptor != null) interceptors.addAll(interceptor);
     interceptors.add(_onErrorWrapper());
   }
 

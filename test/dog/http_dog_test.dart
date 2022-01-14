@@ -9,19 +9,23 @@ main() {
   setUp(() {
     networkManager = NetworkManager(
         isEnableLogger: true,
-        interceptor: InterceptorsWrapper(
-          onRequest: (options, handler) {
-            print(options.data);
-            handler.next(options);
-          },
-        ),
+        interceptors: [
+          InterceptorsWrapper(
+            onRequest: (options, handler) {
+              print(options.data);
+              handler.next(options);
+            },
+          )
+        ],
         options: BaseOptions(
           baseUrl: 'https://hwasampleapi.firebaseio.com',
         ));
   });
   test('Primitve Type', () async {
-    final response = await networkManager.send<EmptyModel, EmptyModel>('/dogs/0/code.json',
-        parseModel: EmptyModel(), method: RequestType.GET);
+    final response = await networkManager.send<EmptyModel, EmptyModel>(
+        '/dogs/0/code.json',
+        parseModel: EmptyModel(),
+        method: RequestType.GET);
 
     expect(response.data, isNotNull);
   });
