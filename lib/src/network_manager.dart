@@ -69,6 +69,10 @@ class NetworkManager with dio.DioMixin implements dio.Dio, INetworkManager {
 
   final bool? isEnableLogger;
 
+  /// [HttpClientAdapter] user can set custom client adapter object
+  /// If value is null, [DefaultHttpClientAdapter()] will be used
+  dio.HttpClientAdapter? customHttpClientAdapter;
+
   /// [Interceptors] return dio client interceptors list
   @override
   dio.Interceptors get dioIntercaptors => interceptors;
@@ -87,7 +91,10 @@ class NetworkManager with dio.DioMixin implements dio.Dio, INetworkManager {
 
     _addLoggerInterceptor(isEnableLogger ?? false);
     _addNetworkIntercaptors(interceptors);
-    httpClientAdapter = adapter.createAdapter();
+
+    httpClientAdapter = (!kIsWeb && customHttpClientAdapter != null)
+        ? customHttpClientAdapter!
+        : adapter.createAdapter();
   }
 
   void _addLoggerInterceptor(bool isEnableLogger) {
