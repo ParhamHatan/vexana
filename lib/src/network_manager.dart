@@ -86,6 +86,7 @@ class NetworkManager with dio.DioMixin implements dio.Dio, INetworkManager {
     this.fileManager,
     this.errorModel,
     this.isEnableTest = false,
+    this.customHttpClientAdapter,
   }) {
     this.options = options;
 
